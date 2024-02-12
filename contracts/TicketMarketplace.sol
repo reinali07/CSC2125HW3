@@ -67,9 +67,9 @@ contract TicketMarketplace is ITicketMarketplace, Ownable {
         require(safemul,"Overflow happened while calculating the total price of tickets. Try buying smaller number of tickets.");
 
         uint256 postTransactionTicketsSold = uint256(events[eventId].nextTicketToSell) + uint256(ticketCount);
-        require(postTransactionTicketsSold <= events[eventId].maxTickets,"We don't have that many tickets left to sell!");
+        require(postTransactionTicketsSold <= uint256(events[eventId].maxTickets),"We don't have that many tickets left to sell!");
 
-        require(msg.value >= totalTransactionPrice, "Not enough funds supplied to buy the specified number of tickets.");
+        require(uint256(msg.value) >= totalTransactionPrice, "Not enough funds supplied to buy the specified number of tickets.");
 
         for (uint128 i = 0; i < ticketCount; i++) {
             uint128 seat = events[eventId].nextTicketToSell++;
@@ -87,7 +87,7 @@ contract TicketMarketplace is ITicketMarketplace, Ownable {
         require(safemul,"Overflow happened while calculating the total price of tickets. Try buying smaller number of tickets.");
 
         uint256 postTransactionTicketsSold = uint256(events[eventId].nextTicketToSell) + uint256(ticketCount);
-        require(postTransactionTicketsSold <= events[eventId].maxTickets,"We don't have that many tickets left to sell!");
+        require(postTransactionTicketsSold <= uint256(events[eventId].maxTickets),"We don't have that many tickets left to sell!");
 
         require(ERC20Address.transferFrom(msg.sender,address(this),totalTransactionPrice), "Not enough funds supplied to buy the specified number of tickets.");
 
